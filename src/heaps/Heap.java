@@ -122,7 +122,7 @@ public class Heap {
 
     public int extractMax() {
         if (heapSize < 1)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Heap underflow");
 
         int max = array.get(0);
         array.set(0, array.get(heapSize - 1));

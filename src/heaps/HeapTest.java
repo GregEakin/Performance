@@ -92,4 +92,14 @@ public class HeapTest {
         heap.heapInsert(15);
         Approvals.verify(heap.toString());
     }
+
+    @Test
+    public void extractMax() throws Exception
+    {
+        int[] array = new int[]{16, 14, 10, 8, 7, 9, 3, 2, 4, 1};
+        Heap heap = new Heap(array);
+        assertEquals(16, heap.extractMax());
+        Approvals.verify(heap.toString());
+    }
+
 }
