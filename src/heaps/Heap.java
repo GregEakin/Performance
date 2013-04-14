@@ -139,7 +139,7 @@ public class Heap {
             array.set(i - 1, array.get(parent(i) - 1));
             i = parent(i);
         }
-        array.set(i-1, key);
+        array.set(i - 1, key);
     }
 }
 
