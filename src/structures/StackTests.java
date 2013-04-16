@@ -34,15 +34,27 @@ public class StackTests {
 
     @Test
     public void pushFull() {
-        Stack stack = new Stack(7);
-        for (int i = 0; i < 7; i++)
+        Stack stack = new Stack(3);
+        for (int i = 0; i < 3; i++)
             stack.push(i);
+        assertEquals(2, stack.pop());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void pushOverflow() {
-        Stack stack = new Stack(7);
-        for (int i = 0; i < 8; i++)
+        Stack stack = new Stack(3);
+        for (int i = 0; i < 5; i++)
             stack.push(i);
+    }
+
+    @Test
+    public void popAfterOverflow() {
+        Stack stack = new Stack(3);
+        try {
+            for (int i = 0; i < 5; i++)
+                stack.push(i);
+        } catch (IllegalArgumentException ex) {
+        }
+        assertEquals(2, stack.pop());
     }
 }

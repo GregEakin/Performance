@@ -14,12 +14,11 @@ public class Stack {
     }
 
     public void push(int x) {
-        top++;
-
-        if (top > data.length)
+        if (top >= data.length)
             throw new IllegalArgumentException("overflow");
 
-        data[top - 1] = x;
+        data[top] = x;
+        top++;
     }
 
     public int pop() {
@@ -27,6 +26,8 @@ public class Stack {
             throw new IllegalArgumentException("underflow");
 
         top--;
-        return data[top];
+        int i = data[top];
+        data[top] = 0;
+        return i;
     }
 }

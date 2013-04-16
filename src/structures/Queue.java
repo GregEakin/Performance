@@ -3,38 +3,34 @@ package structures;
 public class Queue {
     private int head;
     private int tail;
+    private int size;
     private final int[] data;
 
     public Queue(int n) {
-        data = new int[n + 1];
-        head = 1;
-        tail = 1;
+        data = new int[n];
     }
 
     public boolean empty() {
-        return head == tail;
+        return size == 0;
     }
 
     public void enqueue(int x) {
-        data[tail - 1] = x;
-        if (tail == data.length)
-            tail = 1;
-        else
-            tail++;
-
-        if (empty())
+        if (size >= data.length)
             throw new IllegalArgumentException("overflow");
+
+        data[tail] = x;
+        tail = (tail) % data.length;
+        size++;
     }
 
     public int dequeue() {
-        if (empty())
+        if (size == 0)
             throw new IllegalArgumentException("underflow");
 
-        int x = data[head - 1];
-        if (head == data.length)
-            head = 1;
-        else
-            head++;
+        int x = data[head];
+        data[head] = 0;
+        head = (head + 1) % data.length;
+        size--;
         return x;
     }
 }

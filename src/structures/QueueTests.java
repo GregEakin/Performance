@@ -37,6 +37,7 @@ public class QueueTests {
         Queue queue = new Queue(3);
         for (int i = 0; i < 3; i++)
             queue.enqueue(i);
+        assertEquals(2, queue.dequeue());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -44,5 +45,16 @@ public class QueueTests {
         Queue queue = new Queue(3);
         for (int i = 0; i < 4; i++)
             queue.enqueue(i);
+    }
+
+    @Test
+    public void popOverflow() {
+        Queue queue = new Queue(3);
+        try {
+            for (int i = 0; i < 4; i++)
+                queue.enqueue(i);
+        } catch (IllegalArgumentException ex) {
+        }
+        assertEquals(2, queue.dequeue());
     }
 }

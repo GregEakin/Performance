@@ -16,7 +16,7 @@ public class Heap {
 
     public Heap(int size) {
         this.array = new Vector<Integer>(size);
-        heapSize = size;
+        heapSize = 0;
     }
 
     public int parent(int i) {
@@ -142,4 +142,3 @@ public class Heap {
         array.set(i - 1, key);
     }
 }
-
