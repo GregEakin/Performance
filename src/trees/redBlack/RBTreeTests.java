@@ -27,4 +27,33 @@ public class RBTreeTests {
         tree.LeftRotate(tree.root.right);
         Approvals.verify(tree.root.dumpTree(""));
     }
+
+    @Test
+    public void RightRotateRootTest() throws Exception {
+        RBTree tree = new RBTree();
+        tree.root = RBNodeTests.buildSimpleTree();
+
+        tree.LeftRotate(tree.root);
+        tree.RightRotate(tree.root);
+        Approvals.verify(tree.root.dumpTree(""));
+    }
+
+    @Test
+    public void Insert() throws Exception {
+        RBTree tree = new RBTree();
+        tree.root = new RBNode();
+        tree.root.payload = "11";
+        tree.root.key = -1;
+        tree.root.color = RBNode.Color.BLACK;
+
+        int[] values = new int[]{14, 15};
+        for (int i : values) {
+            RBNode node = new RBNode();
+            node.payload = "" + i;
+            node.key = i;
+            tree.Insert(node);
+        }
+
+        Approvals.verify(tree.root.dumpTree(""));
+    }
 }
