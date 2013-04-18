@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  * To change this template use File | Settings | File Templates.
  */
 public class Path2 {
-    @Test
+    // @Test
     public void main() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(4);
 

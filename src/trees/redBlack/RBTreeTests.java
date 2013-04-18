@@ -39,14 +39,25 @@ public class RBTreeTests {
     }
 
     @Test
-    public void Insert() throws Exception {
+    public void TreeInsertTest() throws Exception {
         RBTree tree = new RBTree();
-        tree.root = new RBNode();
-        tree.root.payload = "11";
-        tree.root.key = -1;
-        tree.root.color = RBNode.Color.BLACK;
 
-        int[] values = new int[]{14, 15};
+        int[] values = new int[]{14, 16, 7, 15, 17, 6, 8, 14};
+        for (int i : values) {
+            RBNode node = new RBNode();
+            node.payload = "" + i;
+            node.key = i;
+            tree.TreeInsert(node);
+        }
+
+        Approvals.verify(tree.root.dumpTree(""));
+    }
+
+    @Test
+    public void InsertTest() throws Exception {
+        RBTree tree = new RBTree();
+
+        int[] values = new int[]{11, 14, 2, 15, 1, 7, 5, 8, 4};
         for (int i : values) {
             RBNode node = new RBNode();
             node.payload = "" + i;

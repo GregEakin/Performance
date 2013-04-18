@@ -15,6 +15,11 @@ public class RBNode {
     public String dumpTree(String prefix) {
         StringBuilder result = new StringBuilder();
 
+        if (left != null) {
+            result.append(prefix);
+            result.append(left.dumpTree(prefix + "   "));
+        }
+
         result.append(prefix);
         result.append(" -- ");
         if (key >= 0) {
@@ -27,11 +32,6 @@ public class RBNode {
             result.append(color);
         }
         result.append('\n');
-
-        if (left != null) {
-            result.append(prefix);
-            result.append(left.dumpTree(prefix + "   "));
-        }
 
         if (right != null) {
             result.append(prefix);

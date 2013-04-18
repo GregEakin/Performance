@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
  * To change this template use File | Settings | File Templates.
  */
 public class Path {
-    @Test
+    // @Test
     public void main() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(4);
 

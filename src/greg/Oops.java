@@ -17,7 +17,7 @@ import static org.junit.Assert.assertArrayEquals;
  * To change this template use File | Settings | File Templates.
  */
 public class Oops {
-    @Test
+    // @Test
     public void main() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable runnable = new Runnable() {

@@ -1,7 +1,12 @@
 package trees.redBlack;
 
 public class RBTree {
-    RBNode root;
+    private final RBNode nil = new RBNode();
+    public RBNode root;
+
+    public RBTree() {
+        nil.color = RBNode.Color.BLACK;
+    }
 
     public void LeftRotate(RBNode x) {
         RBNode y = x.right;
@@ -41,17 +46,13 @@ public class RBTree {
         while (x != root && x.parent.color == RBNode.Color.RED) {
             if (x.parent == x.parent.parent.left) {
                 RBNode y = x.parent.parent.right;
-                if (y.color == RBNode.Color.RED)
-                {
+                if (y != null && y.color == RBNode.Color.RED) {
                     x.parent.color = RBNode.Color.BLACK;
                     y.color = RBNode.Color.BLACK;
                     x.parent.parent.color = RBNode.Color.RED;
                     x = x.parent.parent;
-                }
-                else
-                {
-                    if (x == x.parent.right)
-                    {
+                } else {
+                    if (x == x.parent.right) {
                         x = x.parent;
                         LeftRotate(x);
                     }
@@ -61,17 +62,13 @@ public class RBTree {
                 }
             } else {
                 RBNode y = x.parent.parent.left;
-                if (y.color == RBNode.Color.RED)
-                {
+                if (y != null && y.color == RBNode.Color.RED) {
                     x.parent.color = RBNode.Color.BLACK;
                     y.color = RBNode.Color.BLACK;
                     x.parent.parent.color = RBNode.Color.RED;
                     x = x.parent.parent;
-                }
-                else
-                {
-                    if (x == x.parent.left)
-                    {
+                } else {
+                    if (x == x.parent.left) {
                         x = x.parent;
                         RightRotate(x);
                     }
@@ -82,6 +79,117 @@ public class RBTree {
             }
         }
         root.color = RBNode.Color.BLACK;
+    }
+
+    public void RBInsert(RBNode z) {
+        RBNode y = nil;
+        RBNode x = root;
+        while (x != nil) {
+            y = x;
+            x = z.key < x.key ? x.left : x.right;
+        }
+        z.parent = y;
+        if (y == nil)
+            root = z;
+        else if (z.key < y.key)
+            y.left = z;
+        else
+            y.right = z;
+        z.left = nil;
+        z.right = nil;
+        z.color = RBNode.Color.RED;
+        FixUp(z);
+    }
+
+    public void FixUp(RBNode z) {
+        while (z.parent.color == RBNode.Color.RED) {
+            if (z.parent == z.parent.parent.left) {
+                RBNode y = z.parent.parent.right;
+                if (y.color == RBNode.Color.RED) {
+                    z.parent.color = RBNode.Color.BLACK;
+                    y.color = RBNode.Color.BLACK;
+                    z.parent.parent.color = RBNode.Color.RED;
+                    z = z.parent.parent;
+                } else {
+                    if (z == z.parent.right) {
+                        z = z.parent;
+                        LeftRotate(z);
+                    }
+                    z.parent.color = RBNode.Color.BLACK;
+                    z.parent.parent.color = RBNode.Color.RED;
+                    RightRotate(z.parent.parent);
+                }
+            } else {
+                RBNode y = z.parent.parent.left;
+                if (y.color == RBNode.Color.RED) {
+                    z.parent.color = RBNode.Color.BLACK;
+                    y.color = RBNode.Color.BLACK;
+                    z.parent.parent.color = RBNode.Color.RED;
+                    z = z.parent.parent;
+                } else {
+                    if (z == z.parent.left) {
+                        z = z.parent;
+                        RightRotate(z);
+                    }
+                    z.parent.color = RBNode.Color.BLACK;
+                    z.parent.parent.color = RBNode.Color.RED;
+                    LeftRotate(z.parent.parent);
+                }
+            }
+        }
+    }
+
+    // Pull up
+    public RBNode Search(RBNode x, int k) {
+        while (x != null && k != x.key) {
+            x = k < x.key ? x.left : x.right;
+        }
+        return x;
+    }
+
+    // Pull up
+    public RBNode Minimum(RBNode x) {
+        while (x.left != null)
+            x = x.left;
+        return x;
+    }
+
+    // pull up
+    public RBNode Maximum(RBNode x) {
+        while (x.right != null)
+            x = x.right;
+        return x;
+    }
+
+    // Pull up
+    public RBNode Successor(RBNode x) {
+        if (x.right != null)
+            return Minimum(x.right);
+        RBNode y = x.parent;
+        while (y != null && x == y.right) {
+            x = y;
+            y = y.parent;
+        }
+        return y;
+    }
+
+    // pull up
+    public RBNode Delete(RBNode z) {
+        RBNode y = z.left == null || z.right == null ? z : Successor(z);
+        RBNode x = y.left != null ? y.left : y.right;
+        if (x != null)
+            x.parent = y.parent;
+        if (y.parent == null)
+            root = x;
+        else if (y == y.parent.left)
+            y.parent.left = x;
+        else
+            y.parent.right = x;
+        if (y != z) {
+            z.key = y.key;
+            z.payload = y.payload;
+        }
+        return y;
     }
 
     public void TreeInsert(RBNode z) {
