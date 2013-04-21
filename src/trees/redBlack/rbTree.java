@@ -98,10 +98,10 @@ public class RBTree {
         z.left = nil;
         z.right = nil;
         z.color = RBNode.Color.RED;
-        FixUp(z);
+        InsertFixUp(z);
     }
 
-    public void FixUp(RBNode z) {
+    public void InsertFixUp(RBNode z) {
         while (z.parent.color == RBNode.Color.RED) {
             if (z.parent == z.parent.parent.left) {
                 RBNode y = z.parent.parent.right;
@@ -173,8 +173,83 @@ public class RBTree {
         return y;
     }
 
+    public void Delete(RBNode z) {
+        RBNode y = z.left == null || z.right == null ? z : Successor(z);
+        RBNode x = y.left != null ? y.left : y.right;
+        x.parent = y.parent;
+        if (y.parent == null)
+            root = x;
+        else {
+            if (y == y.parent.left)
+                y.parent.left = x;
+            else
+                y.parent.right = x;
+        }
+        if (y != z) {
+            z.key = y.key;
+            z.payload = y.payload;
+        }
+        if (y.color == RBNode.Color.BLACK)
+            DeleteFixUp(x);
+    }
+
+    private void DeleteFixUp(RBNode x) {
+        while (x != null && x.color == RBNode.Color.BLACK) {
+            if (x == x.left.parent) {
+                RBNode w = x.parent.right;
+                if (w.color == RBNode.Color.RED) {
+                    w.color = RBNode.Color.BLACK;
+                    x.parent.color = RBNode.Color.RED;
+                    LeftRotate(x.parent);
+                    w = x.parent.right;
+                }
+                if (w.left.color == RBNode.Color.BLACK && w.right.color == RBNode.Color.BLACK) {
+                    w.color = RBNode.Color.RED;
+                    x = x.parent;
+                } else {
+                    if (w.right.color == RBNode.Color.BLACK) {
+                        w.left.color = RBNode.Color.BLACK;
+                        w.color = RBNode.Color.RED;
+                        RightRotate(w);
+                        w = w.parent.right;
+                    }
+                    w.color = x.parent.color;
+                    x.parent.color = RBNode.Color.BLACK;
+                    w.right.color = RBNode.Color.BLACK;
+                    LeftRotate(x.parent);
+                    x = root;
+                }
+            } else {
+                RBNode w = x.parent.left;
+                if (w.color == RBNode.Color.RED) {
+                    w.color = RBNode.Color.BLACK;
+                    x.parent.color = RBNode.Color.RED;
+                    RightRotate(x.parent);
+                    w = x.parent.left;
+                }
+                if (w.right.color == RBNode.Color.BLACK && w.left.color == RBNode.Color.BLACK) {
+                    w.color = RBNode.Color.RED;
+                    x = x.parent;
+                } else {
+                    if (w.left.color == RBNode.Color.BLACK) {
+                        w.right.color = RBNode.Color.BLACK;
+                        w.color = RBNode.Color.RED;
+                        LeftRotate(w);
+                        w = w.parent.left;
+                    }
+                    w.color = x.parent.color;
+                    x.parent.color = RBNode.Color.BLACK;
+                    w.left.color = RBNode.Color.BLACK;
+                    RightRotate(x.parent);
+                    x = root;
+                }
+            }
+        }
+        x.color = RBNode.Color.BLACK;
+    }
+
     // pull up
-    public RBNode Delete(RBNode z) {
+    public RBNode TreeDelete(RBNode z) {
         RBNode y = z.left == null || z.right == null ? z : Successor(z);
         RBNode x = y.left != null ? y.left : y.right;
         if (x != null)

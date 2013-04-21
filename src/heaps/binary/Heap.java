@@ -1,4 +1,4 @@
-package heaps;
+package heaps.binary;
 
 import java.util.Vector;
 

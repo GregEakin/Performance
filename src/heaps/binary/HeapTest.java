@@ -1,4 +1,4 @@
-package heaps;
+package heaps.binary;
 
 import org.approvaltests.Approvals;
 import org.junit.Test;
