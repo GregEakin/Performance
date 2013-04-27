@@ -24,7 +24,7 @@ class Pair {
             return false;
 
         Pair pair = (Pair) obj;
-        return x == pair.x && y == pair.y;
+        return (x == pair.x && y == pair.y) || (x == pair.y && y == pair.x);
     }
 
     @Override
