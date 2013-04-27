@@ -26,16 +26,19 @@ public class Node extends Thread {
     }
 
     private void function() throws InterruptedException {
+        next = link;
         d = next == null ? 0 : 1;
         barrier.gather();
 
         while (next != null) {
-            d += next.d;
-            Node temp = next.next;
+            int nextD = next.d;
+            Node nextNode = next.next;
             barrier.gather();
-            next = temp;
-        }
 
+            d += nextD;
+            next = nextNode;
+            barrier.gather();
+        }
         barrier.exit();
     }
 }

@@ -58,21 +58,18 @@ public class ListRank<T> {
 
     @Test
     public void Figure30() {
-        Integer[] items = new Integer[]{3, 4, 6, 1, 0, 5};
+        int[] items = new int[]{3, 4, 6, 1, 0, 5};
         setup(items);
     }
 
-    public void setup(Integer[] input) {
+    public void setup(int[] input) {
         SimpleBarrier barrier = new SimpleBarrier(input.length);
         Node head = null;
         Node last = null;
         for (int i = 0; i < input.length; i++) {
             Node node = new Node(barrier, i, input[i]);
             if (last != null)
-            {
-                last.next = node;
                 last.link = node;
-            }
             last = node;
             if (i == 0)
                 head = node;
