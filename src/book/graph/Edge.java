@@ -2,11 +2,11 @@ package book.graph;
 
 import java.util.LinkedList;
 
-public class Edge {
-    final public int value;
+public class Edge<T> {
+    final public T value;
     public Edge next;
 
-    public Edge(int value) {
+    public Edge(T value) {
         this.value = value;
     }
 

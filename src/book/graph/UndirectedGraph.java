@@ -5,36 +5,31 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public class UndirectedGraph {
-    final Dictionary<Integer, Edge> edges = new Hashtable<Integer, Edge>();
+public class UndirectedGraph<T> {
+    final Dictionary<T, Edge<T>> edges = new Hashtable<T, Edge<T>>();
 
-    public UndirectedGraph(int size) {
-        for (int i = 0; i < size; i++)
-            edges.put(i + 1, new Edge(i + 1));
-    }
-
-    public UndirectedGraph(Pair[] data) {
-        for (Pair pair : data) {
-            Edge edge1 = edges.get(pair.x);
+    public UndirectedGraph(Pair<T>[] data) {
+        for (Pair<T> pair : data) {
+            Edge<T> edge1 = edges.get(pair.x);
             if (edge1 == null) {
-                edge1 = new Edge(pair.x);
+                edge1 = new Edge<T>(pair.x);
                 edges.put(pair.x, edge1);
             }
-            edge1.append(new Edge(pair.y));
+            edge1.append(new Edge<T>(pair.y));
 
-            Edge edge2 = edges.get(pair.y);
+            Edge<T> edge2 = edges.get(pair.y);
             if (edge2 == null) {
-                edge2 = new Edge(pair.y);
+                edge2 = new Edge<T>(pair.y);
                 edges.put(pair.y, edge2);
             }
-            edge2.append(new Edge(pair.x));
+            edge2.append(new Edge<T>(pair.x));
         }
     }
 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (Edge edge : Collections.list(edges.elements())) {
+        for (Edge<T> edge : Collections.list(edges.elements())) {
             result.append(edge.value);
             while (edge.next != null) {
                 edge = edge.next;
@@ -46,18 +41,13 @@ public class UndirectedGraph {
         return result.toString();
     }
 
-    public static class Pair {
-        final int x;
-        final int y;
+    public static class Pair<T> {
+        final T x;
+        final T y;
 
-        public Pair(int x, int y) {
-            if (x < y) {
-                this.x = x;
-                this.y = y;
-            } else {
-                this.x = y;
-                this.y = x;
-            }
+        public Pair(T x, T y) {
+            this.x = x;
+            this.y = y;
         }
 
         @Override
@@ -69,13 +59,13 @@ public class UndirectedGraph {
             if (!(obj instanceof Pair))
                 return false;
 
-            Pair pair = (Pair) obj;
-            return x == pair.x && y == pair.y;
+            Pair<T> pair = (Pair<T>) obj;
+            return (x == pair.x && y == pair.y) || (x == pair.y && y == pair.x);
         }
 
         @Override
         public int hashCode() {
-            return x + y * 1003;
+            return x.hashCode() + y.hashCode() * 1003;
         }
     }
 }

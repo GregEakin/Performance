@@ -8,32 +8,6 @@ public class EdgeTests {
      }
 
     @Test
-    public void Figure1() {
-        Edge[] edges = new Edge[5];
-        edges[0] = new Edge(1);
-        edges[0].next = new Edge(2);
-        edges[0].next.next = new Edge(5);
-        edges[1] = new Edge(2);
-        edges[1].next = new Edge(1);
-        edges[1].next.next = new Edge(5);
-        edges[1].next.next.next = new Edge(3);
-        edges[1].next.next.next.next = new Edge(4);
-        edges[2] = new Edge(3);
-        edges[2].next = new Edge(2);
-        edges[2].next.next = new Edge(4);
-        edges[3] = new Edge(4);
-        edges[3].next = new Edge(2);
-        edges[3].next.next = new Edge(5);
-        edges[3].next.next.next = new Edge(3);
-        edges[4] = new Edge(5);
-        edges[4].next = new Edge(4);
-        edges[4].next.next = new Edge(1);
-        edges[4].next.next.next = new Edge(2);
-
-        ShowAdjacencyList(edges);
-    }
-
-    @Test
     public void Figure2a() {
         Pair[] data = new Pair[]{
                 new Pair(1, 2),

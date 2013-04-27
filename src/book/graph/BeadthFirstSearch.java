@@ -1,33 +1,64 @@
 package book.graph;
 
+import org.junit.Test;
 import structures.Queue;
 
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 public class BeadthFirstSearch {
+    static class Element {
+        public Edge<Character> edge;
+        public States color;
+        public int d;
+        public Element pi;
+        Character c;
 
-    public static void Search()
-    {
-        // for each vertex u in V[G]
-        //   u.color = white
-        //   y.d = max
-        //   y.pi = null
+        enum States {White, Gray, Black}
+    }
 
-        // s.color = gray
-        // s.d = 0
-        // s.pi = nul;
+    @Test
+    public void Search(UndirectedGraph<Character> graph, Character node) {
 
+        int size = graph.edges.size();
+        Element root = null;
+        final Dictionary<Character, Element> edges = new Hashtable<Character, Element>();
+        for (Character key : Collections.list(graph.edges.keys())) {
+            Element element = new Element();
+            element.c = key;
+            element.edge = graph.edges.get(key);
+            element.color = Element.States.White;
+            element.d = Integer.MAX_VALUE;
+            element.pi = null;
+            edges.put(key, element);
 
-        Queue que = new Queue(100);
-        que.enqueue(3);
-        while(!que.empty())
-        {
-            // u = que.deque
-            // foreach( v in u.connections)
-                // if (v.color == white)
-                     // v.color = gray
-                     // v.d = u.d + 1;
-                     // v.pi = u;
-                     // que.enque(v)
+            if (key == node)
+                root = element;
+        }
 
-        }   // u.color = black;
+        if (root != null) {
+            root.color = Element.States.Gray;
+            root.d = 0;
+            root.pi = null;
+
+            Queue<Element> queue = new Queue<Element>(100);
+            queue.enqueue(root);
+            while (!queue.empty()) {
+                Element u = queue.dequeue();
+                Edge edge = graph.edges.get(u.c);
+                while (edge.next != null) {
+                    edge = edge.next;
+                    Element v = edges.get(edge.value);
+                    if (v.color == Element.States.White) {
+                        v.color = Element.States.Gray;
+                        v.d = u.d + 1;
+                        v.pi = u;
+                        queue.enqueue(v);
+                    }
+                }
+                u.color = Element.States.Black;
+            }
+        }
     }
 }
