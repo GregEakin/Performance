@@ -1,5 +1,6 @@
 package book.graph;
 
+import junit.framework.Assert;
 import org.junit.Test;
 import structures.Queue;
 
@@ -7,21 +8,34 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public class BeadthFirstSearch {
-    static class Element {
-        public Edge<Character> edge;
-        public States color;
-        public int d;
-        public Element pi;
-        Character c;
+import static org.junit.Assert.assertEquals;
 
-        enum States {White, Gray, Black}
+public class BeadthFirstSearch {
+    @Test
+    public void Figure23() {
+        UndirectedGraph.Pair[] data = new UndirectedGraph.Pair[]{
+                new UndirectedGraph.Pair('r', 'v'),
+                new UndirectedGraph.Pair('r', 's'),
+                new UndirectedGraph.Pair('s', 'w'),
+                new UndirectedGraph.Pair('w', 't'),
+                new UndirectedGraph.Pair('w', 'x'),
+                new UndirectedGraph.Pair('t', 'x'),
+                new UndirectedGraph.Pair('t', 'u'),
+                new UndirectedGraph.Pair('x', 'y'),
+                new UndirectedGraph.Pair('u', 'y'),
+        };
+
+        UndirectedGraph graph = new UndirectedGraph(data);
+        Dictionary<Character, Element> edges = Search(graph, 's');
+        for (Element element : Collections.list(edges.elements())) {
+            System.out.print(element.c + ": ");
+            System.out.print(" d = " + element.d);
+            assertEquals(Element.States.Black, element.color);
+            System.out.println();
+        }
     }
 
-    @Test
-    public void Search(UndirectedGraph<Character> graph, Character node) {
-
-        int size = graph.edges.size();
+    public Dictionary<Character, Element> Search(UndirectedGraph<Character> graph, Character node) {
         Element root = null;
         final Dictionary<Character, Element> edges = new Hashtable<Character, Element>();
         for (Character key : Collections.list(graph.edges.keys())) {
@@ -46,7 +60,7 @@ public class BeadthFirstSearch {
             queue.enqueue(root);
             while (!queue.empty()) {
                 Element u = queue.dequeue();
-                Edge edge = graph.edges.get(u.c);
+                Edge edge = u.edge;
                 while (edge.next != null) {
                     edge = edge.next;
                     Element v = edges.get(edge.value);
@@ -60,5 +74,16 @@ public class BeadthFirstSearch {
                 u.color = Element.States.Black;
             }
         }
+        return edges;
+    }
+
+    static class Element {
+        public Edge<Character> edge;
+        public States color;
+        public int d;
+        public Element pi;
+        Character c;
+
+        enum States {White, Gray, Black}
     }
 }

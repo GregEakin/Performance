@@ -19,7 +19,7 @@ public class Queue<T> {
             throw new IllegalArgumentException("overflow");
 
         data[tail] = x;
-        tail = (tail) % data.length;
+        tail = (tail + 1) % data.length;
         size++;
     }
 
