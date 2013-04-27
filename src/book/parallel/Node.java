@@ -1,9 +1,41 @@
 package book.parallel;
 
-public class Node<T> {
+import info.jhpc.thread.SimpleBarrier;
+
+public class Node extends Thread {
+    final int i;
+    final SimpleBarrier barrier;
+    final int value;
     public int d;
-    public T source;
-    public Node<T> next;
-    public Node<T> link;
-    // public Thing<T> thing;
+    public Node next;
+    public Node link;
+
+    public Node(SimpleBarrier barrier, int i, int value) {
+        this.barrier = barrier;
+        this.i = i;
+        this.value = value;
+    }
+
+    @Override
+    public void run() {
+        try {
+            function();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void function() throws InterruptedException {
+        d = next == null ? 0 : 1;
+        barrier.gather();
+
+        while (next != null) {
+            d += next.d;
+            Node temp = next.next;
+            barrier.gather();
+            next = temp;
+        }
+
+        barrier.exit();
+    }
 }

@@ -64,10 +64,10 @@ public class ListRank<T> {
 
     public void setup(Integer[] input) {
         SimpleBarrier barrier = new SimpleBarrier(input.length);
-        Thing head = null;
-        Thing last = null;
+        Node head = null;
+        Node last = null;
         for (int i = 0; i < input.length; i++) {
-            Thing node = new Thing(barrier, i, input[i]);
+            Node node = new Node(barrier, i, input[i]);
             if (last != null)
             {
                 last.next = node;
@@ -78,14 +78,14 @@ public class ListRank<T> {
                 head = node;
         }
 
-        Thing node1 = head;
+        Node node1 = head;
         while (node1 != null) {
             node1.start();
             node1 = node1.link;
         }
 
         try {
-            Thing node2 = head;
+            Node node2 = head;
             while (node2 != null) {
                 node2.join();
                 System.out.println("Done " + node2.value + ", d = " + node2.d);
