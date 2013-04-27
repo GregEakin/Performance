@@ -3,6 +3,7 @@ package book.parallel;
 import info.jhpc.thread.SimpleBarrier;
 import org.junit.Test;
 import structures.LinkedList;
+import static org.junit.Assert.assertEquals;
 
 public class ListRank<T> {
     public void RankBook(LinkedList<T> list) {
@@ -62,7 +63,14 @@ public class ListRank<T> {
         setup(items);
     }
 
+    @Test
+    public void Figure30Big() {
+        int[] items = new int[1000];
+        setup(items);
+    }
+
     public void setup(int[] input) {
+        int size = input.length;
         SimpleBarrier barrier = new SimpleBarrier(input.length);
         Node head = null;
         Node last = null;
@@ -85,7 +93,7 @@ public class ListRank<T> {
             Node node2 = head;
             while (node2 != null) {
                 node2.join();
-                System.out.println("Done " + node2.value + ", d = " + node2.d);
+                assertEquals(--size, node2.d);
                 node2 = node2.link;
             }
         } catch (InterruptedException e) {
