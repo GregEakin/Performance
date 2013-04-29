@@ -6,14 +6,15 @@ public class Node extends Thread {
     final int i;
     final SimpleBarrier barrier;
     final int value;
+    final Node link;
     public int d;
     public Node next;
-    public Node link;
 
-    public Node(SimpleBarrier barrier, int i, int value) {
+    public Node(SimpleBarrier barrier, int i, int value, Node link) {
         this.barrier = barrier;
         this.i = i;
         this.value = value;
+        this.link = link;
     }
 
     @Override

@@ -6,25 +6,6 @@ import structures.LinkedList;
 import static org.junit.Assert.assertEquals;
 
 public class ListRank<T> {
-    public void RankBook(LinkedList<T> list) {
-        // Note: this destroys the structure of the next pointers
-        // Make copies of the pointers, and use them instead
-
-        // for each processor i, in parallel
-        //   do if next[i] == nil
-        //          d[i] = 0
-        //      else
-        //          d[i] = 1
-        // while there exists an object i, such that next[i] != null
-        //    do for each processor i, in parallel
-        //           do if next[i] != null  {
-        //                  d[i] += d[next[i]]
-        //                  // Note all the reads have to happen first
-        //                  // then the first write can continue
-        //                  next[i] = next[next[i]]
-        //           }
-    }
-
     public void Rank(LinkedList<T> list) {
         // Note: this destroys the structure of the next pointers
         // Make copies of the pointers, and use them instead
@@ -73,15 +54,8 @@ public class ListRank<T> {
         int size = input.length;
         SimpleBarrier barrier = new SimpleBarrier(input.length);
         Node head = null;
-        Node last = null;
-        for (int i = 0; i < input.length; i++) {
-            Node node = new Node(barrier, i, input[i]);
-            if (last != null)
-                last.link = node;
-            last = node;
-            if (i == 0)
-                head = node;
-        }
+        for (int i = input.length - 1; i >= 0; i--)
+            head = new Node(barrier, i, input[i], head);
 
         Node node1 = head;
         while (node1 != null) {
