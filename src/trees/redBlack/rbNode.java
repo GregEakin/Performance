@@ -3,8 +3,6 @@ package trees.redBlack;
 public class RBNode {
     public enum Color {RED, BLACK}
 
-    ;
-
     public RBNode parent;
     public RBNode left;
     public RBNode right;
