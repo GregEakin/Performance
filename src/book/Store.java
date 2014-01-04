@@ -8,16 +8,16 @@ package book;
  * To change this template use File | Settings | File Templates.
  */
 public class Store<T> implements Op1<T> {
-    StoreOp dst;
+    StoreOp<T> dst;
     int pos;
 
-    public Store(StoreOp dst, int pos) {
+    public Store(StoreOp<T> dst, int pos) {
         this.dst = dst;
         this.pos = pos;
     }
 
     @Override
-    public void op(Object operand) {
+    public void op(T operand) {
         dst.store(pos, operand);
     }
 

@@ -13,7 +13,7 @@ public class Binop2<T> implements StoreOp<T> {
     Op2<T> continuation;
     int needed = 2;
 
-    public Binop2(Op2 continuation)
+    public Binop2(Op2<T> continuation)
     {
         this.continuation = continuation;
     }

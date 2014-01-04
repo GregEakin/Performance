@@ -12,9 +12,9 @@ import java.util.concurrent.RunnableFuture;
  */
 public class Fetch<T> implements Runnable {
     RunnableFuture<T> src;
-    Op1 continuation;
+    Op1<T> continuation;
 
-    public Fetch(RunnableFuture<T> src, Op1 continuation) {
+    public Fetch(RunnableFuture<T> src, Op1<T> continuation) {
         this.src = src;
         this.continuation = continuation;
     }

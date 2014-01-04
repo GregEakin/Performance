@@ -1,6 +1,5 @@
 package book.graph;
 
-import junit.framework.Assert;
 import org.junit.Test;
 import structures.Queue;
 
