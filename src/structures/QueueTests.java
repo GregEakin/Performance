@@ -26,6 +26,14 @@ public class QueueTests {
         assertTrue(queue.empty());
     }
 
+    @Test
+    public void pushPop2() {
+        Queue<Integer> queue = new Queue<Integer>(3);
+        queue.enqueue(15);
+        queue.enqueue(5);
+        assertEquals(new Integer(5), queue.dequeue());
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void popUnderflow() {
         Queue<Integer> queue = new Queue<Integer>(3);
