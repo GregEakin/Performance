@@ -10,8 +10,8 @@ public class Heap {
     public Heap(int[] array) {
         this.array = new Vector<Integer>(array.length);
         heapSize = array.length;
-        for (int i = 0; i < array.length; i++)
-            this.array.add(array[i]);
+        for (int anArray : array)
+            this.array.add(anArray);
     }
 
     public Heap(int size) {

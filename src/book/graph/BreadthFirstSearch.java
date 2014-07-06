@@ -9,7 +9,7 @@ import java.util.Hashtable;
 
 import static org.junit.Assert.assertEquals;
 
-public class BeadthFirstSearch {
+public class BreadthFirstSearch {
     @Test
     public void Figure23() {
         UndirectedGraph.Pair[] data = new UndirectedGraph.Pair[]{
