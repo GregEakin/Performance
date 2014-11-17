@@ -4,10 +4,7 @@ import org.approvaltests.Approvals;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -21,6 +18,10 @@ public class Iteration {
 
     static Predicate<String> startsWith(final String letter) {
         return name -> name.startsWith(letter);
+    }
+
+    private static void method(String name) {
+        Objects.requireNonNull(name);
     }
 
     @Test
@@ -47,12 +48,6 @@ public class Iteration {
         Assert.assertEquals(2, friends.stream().filter(startsWithN).count());
     }
 
-    @Test
-    public void sample4() throws Exception {
-
-        Assert.assertEquals(2, friends.stream().filter(startsWith("N")).count());
-    }
-
 //    @Test
 //    public void sample5() throws Exception {
 //        final Function<String, Predicate<String>> startsWithLetter =
@@ -63,6 +58,12 @@ public class Iteration {
 //
 //        Assert.assertEquals(1, friends.stream().filter(startsWithLetter.apply("N")).count());
 //    }
+
+    @Test
+    public void sample4() throws Exception {
+
+        Assert.assertEquals(2, friends.stream().filter(startsWith("N")).count());
+    }
 
     @Test
     public void sample6() throws Exception {
@@ -90,5 +91,15 @@ public class Iteration {
     public void sample9() throws Exception {
         int count = friends.stream().mapToInt(String::length).sum();
         Assert.assertEquals(26, count);
+    }
+
+    @Test
+    public void sample10() throws Exception {
+        Approvals.verify(String.join(", ", friends));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void NotNullTest() throws Exception {
+        method(null);
     }
 }
