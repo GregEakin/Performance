@@ -4,10 +4,8 @@ import org.approvaltests.Approvals;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -77,6 +75,17 @@ public class Compare {
     }
 
     @Test
+    public void ascendingAgeAndNameTest() throws Exception {
+        final Function<Person, Integer> byAge = person -> person.getAge();
+        final Function<Person, String> byName = person -> person.getName();
+
+        List<Person> ascendingAgeAndName = people.stream()
+                .sorted(Comparator.comparing(byAge).thenComparing(byName))
+                .collect(Collectors.toList());
+        Approvals.verifyAll("ascendingAgeAndName", ascendingAgeAndName);
+    }
+
+    @Test
     public void youngestAgeTest() throws Exception {
         Optional<Person> youngest = people.stream()
                 .min(Person::ageDifference);
@@ -90,5 +99,37 @@ public class Compare {
                 .max(Person::ageDifference);
         Assert.assertTrue(eldest.isPresent());
         Assert.assertEquals(people.get(3), eldest.get());
+    }
+
+    @Test
+    public void olderThan20() throws Exception {
+        List<Person> olderThanTwenty = people.stream()
+                .filter(person -> person.getAge() > 20)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+        Approvals.verifyAll("olderThanTwenty", olderThanTwenty);
+    }
+
+    @Test
+    public void groupByAge() throws Exception {
+        Map<Integer, List<Person>> peopleByAge = people.stream()
+                .collect(Collectors.groupingBy(Person::getAge));
+        Approvals.verify(peopleByAge);
+    }
+
+    @Test
+    public void PersonsNameByAge() throws Exception {
+        Map<Integer, List<String>> nameOfPeopleByAge = people.stream()
+                .collect(Collectors.groupingBy(Person::getAge, Collectors.mapping(Person::getName, Collectors.toList())));
+        Approvals.verify(nameOfPeopleByAge);
+    }
+
+    @Test
+    public void OldestByFirstChar() throws Exception {
+        Comparator<Person> byAge = Comparator.comparing(Person::getAge);
+        Map<Character, Optional<Person>> oldestPersonOfEachLetter = people.stream()
+                .collect(Collectors.groupingBy(person -> person.getName().charAt(0),
+                        Collectors.reducing(BinaryOperator.maxBy(byAge))));
+
+        Approvals.verify(oldestPersonOfEachLetter);
     }
 }

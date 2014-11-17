@@ -1,0 +1,3 @@
+olderThanTwenty[0] = Sara - 21
+olderThanTwenty[1] = Jane - 21
+olderThanTwenty[2] = Greg - 35
