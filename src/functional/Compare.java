@@ -20,42 +20,34 @@ public class Compare {
 
     @Test
     public void ascendingAgeTest() throws Exception {
-        List<Person> ascendingAge =
-                people.stream()
-                        .sorted(Person::ageDifference)
-                        .collect(Collectors.toList());
-        List<String> collection = ascendingAge.stream()
+        List<String> ascendingAge = people.stream()
+                .sorted(Person::ageDifference)
                 .map(Person::toString)
                 .collect(Collectors.toList());
-        String sortedPeople = String.join("\n", collection);
+        String sortedPeople = String.join("\n", ascendingAge);
         Approvals.verify(sortedPeople);
     }
 
     @Test
     public void descendingAgeTest() throws Exception {
-        List<Person> descendingAge =
-                people.stream()
-                        .sorted((person1, person2) -> person2.ageDifference(person1))
-                        .collect(Collectors.toList());
-        List<String> collection = descendingAge.stream()
+        List<String> descendingAge = people.stream()
+                .sorted((person1, person2) -> person2.ageDifference(person1))
                 .map(Person::toString)
                 .collect(Collectors.toList());
-        String sortedPeople = String.join("\n", collection);
+        String sortedPeople = String.join("\n", descendingAge);
         Approvals.verify(sortedPeople);
     }
 
+    @Test
     public void descendingAgeTest2() throws Exception {
         Comparator<Person> compareAscending = Person::ageDifference;
         Comparator<Person> compareDescending = compareAscending.reversed();
 
-        List<Person> descendingAge =
-                people.stream()
-                        .sorted(compareDescending)
-                        .collect(Collectors.toList());
-        List<String> collection = descendingAge.stream()
+        List<String> descendingAge = people.stream()
+                .sorted(compareDescending)
                 .map(Person::toString)
                 .collect(Collectors.toList());
-        String sortedPeople = String.join("\n", collection);
+        String sortedPeople = String.join("\n", descendingAge);
         Approvals.verify(sortedPeople);
     }
 }
