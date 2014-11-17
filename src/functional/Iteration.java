@@ -44,13 +44,13 @@ public class Iteration {
     public void sample3() throws Exception {
         final Predicate<String> startsWithN = name -> name.startsWith("N");
 
-        Assert.assertEquals(1, friends.stream().filter(startsWithN).count());
+        Assert.assertEquals(2, friends.stream().filter(startsWithN).count());
     }
 
     @Test
     public void sample4() throws Exception {
 
-        Assert.assertEquals(1, friends.stream().filter(startsWith("N")).count());
+        Assert.assertEquals(2, friends.stream().filter(startsWith("N")).count());
     }
 
 //    @Test
@@ -69,7 +69,7 @@ public class Iteration {
         final Function<String, Predicate<String>> startsWithLetter =
                 (String letter) -> (String name) -> name.startsWith(letter);
 
-        Assert.assertEquals(1, friends.stream().filter(startsWithLetter.apply("N")).count());
+        Assert.assertEquals(2, friends.stream().filter(startsWithLetter.apply("N")).count());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class Iteration {
         final Function<String, Predicate<String>> startsWithLetter =
                 letter -> name -> name.startsWith(letter);
 
-        Assert.assertEquals(1, friends.stream().filter(startsWithLetter.apply("N")).count());
+        Assert.assertEquals(2, friends.stream().filter(startsWithLetter.apply("N")).count());
     }
 
     @Test
