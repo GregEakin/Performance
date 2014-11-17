@@ -4,6 +4,7 @@ import org.approvaltests.Approvals;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,11 +33,26 @@ public class Compare {
 
     @Test
     public void descendingAgeTest() throws Exception {
-        List<Person> ascendingAge =
+        List<Person> descendingAge =
                 people.stream()
                         .sorted((person1, person2) -> person2.ageDifference(person1))
                         .collect(Collectors.toList());
-        List<String> collection = ascendingAge.stream()
+        List<String> collection = descendingAge.stream()
+                .map(Person::toString)
+                .collect(Collectors.toList());
+        String sortedPeople = String.join("\n", collection);
+        Approvals.verify(sortedPeople);
+    }
+
+    public void descendingAgeTest2() throws Exception {
+        Comparator<Person> compareAscending = Person::ageDifference;
+        Comparator<Person> compareDescending = compareAscending.reversed();
+
+        List<Person> descendingAge =
+                people.stream()
+                        .sorted(compareDescending)
+                        .collect(Collectors.toList());
+        List<String> collection = descendingAge.stream()
                 .map(Person::toString)
                 .collect(Collectors.toList());
         String sortedPeople = String.join("\n", collection);
