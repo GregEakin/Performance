@@ -1,0 +1,4 @@
+descendingAge[0] = Greg - 35
+descendingAge[1] = Sara - 21
+descendingAge[2] = Jane - 21
+descendingAge[3] = John - 20

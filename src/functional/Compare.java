@@ -44,4 +44,12 @@ public class Compare {
                 .collect(Collectors.toList());
         Approvals.verifyAll("descendingAge", descendingAge);
     }
+
+    @Test
+    public void descendingAgeTest3() throws Exception {
+        List<Person> descendingAge = people.stream()
+                .sorted(((Comparator<Person>) Person::ageDifference).reversed())
+                .collect(Collectors.toList());
+        Approvals.verifyAll("descendingAge", descendingAge);
+    }
 }
