@@ -1,4 +1,4 @@
-John - 20
-Sara - 21
-Jane - 21
-Greg - 35
+ascendingAge[0] = John - 20
+ascendingAge[1] = Sara - 21
+ascendingAge[2] = Jane - 21
+ascendingAge[3] = Greg - 35
