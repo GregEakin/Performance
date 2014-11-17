@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  * Created by Greg on 11/16/2014.
  */
 public class Iteration {
-    private static final List<String> friends = Arrays.asList("Brian", "Nate", "Raju", "Sara", "Scott");
+    private static final List<String> friends = Arrays.asList("Brian", "Nate", "Neal", "Raju", "Sara", "Scott");
 
     static Predicate<String> startsWith(final String letter) {
         return name -> name.startsWith(letter);
@@ -52,16 +53,16 @@ public class Iteration {
         Assert.assertEquals(1, friends.stream().filter(startsWith("N")).count());
     }
 
-    @Test
-    public void sample5() throws Exception {
-        final Function<String, Predicate<String>> startsWithLetter =
-                (String letter) -> {
-                    Predicate<String> checkStarts = (String name) -> name.startsWith(letter);
-                    return checkStarts;
-                };
-
-        Assert.assertEquals(1, friends.stream().filter(startsWithLetter.apply("N")).count());
-    }
+//    @Test
+//    public void sample5() throws Exception {
+//        final Function<String, Predicate<String>> startsWithLetter =
+//                (String letter) -> {
+//                    Predicate<String> stringPredicate = (String name) -> name.startsWith(letter);
+//                    return stringPredicate;
+//                };
+//
+//        Assert.assertEquals(1, friends.stream().filter(startsWithLetter.apply("N")).count());
+//    }
 
     @Test
     public void sample6() throws Exception {
@@ -77,5 +78,17 @@ public class Iteration {
                 letter -> name -> name.startsWith(letter);
 
         Assert.assertEquals(1, friends.stream().filter(startsWithLetter.apply("N")).count());
+    }
+
+    @Test
+    public void sample8() throws Exception {
+        final Optional<String> foundName = friends.stream().filter(name -> name.startsWith("X")).findFirst();
+        Assert.assertEquals("Not found", foundName.orElse("Not found"));
+    }
+
+    @Test
+    public void sample9() throws Exception {
+        int count = friends.stream().mapToInt(String::length).sum();
+        Assert.assertEquals(26, count);
     }
 }
