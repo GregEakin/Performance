@@ -1,0 +1,4 @@
+ascendingName[0] = Greg - 35
+ascendingName[1] = Jane - 21
+ascendingName[2] = John - 20
+ascendingName[3] = Sara - 21
