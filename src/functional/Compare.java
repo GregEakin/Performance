@@ -20,22 +20,18 @@ public class Compare {
 
     @Test
     public void ascendingAgeTest() throws Exception {
-        List<String> ascendingAge = people.stream()
+        List<Person> ascendingAge = people.stream()
                 .sorted(Person::ageDifference)
-                .map(Person::toString)
                 .collect(Collectors.toList());
-        String sortedPeople = String.join("\n", ascendingAge);
-        Approvals.verify(sortedPeople);
+        Approvals.verifyAll("ascendingAge", ascendingAge);
     }
 
     @Test
     public void descendingAgeTest() throws Exception {
-        List<String> descendingAge = people.stream()
+        List<Person> descendingAge = people.stream()
                 .sorted((person1, person2) -> person2.ageDifference(person1))
-                .map(Person::toString)
                 .collect(Collectors.toList());
-        String sortedPeople = String.join("\n", descendingAge);
-        Approvals.verify(sortedPeople);
+        Approvals.verifyAll("descendingAge", descendingAge);
     }
 
     @Test
@@ -43,11 +39,9 @@ public class Compare {
         Comparator<Person> compareAscending = Person::ageDifference;
         Comparator<Person> compareDescending = compareAscending.reversed();
 
-        List<String> descendingAge = people.stream()
+        List<Person> descendingAge = people.stream()
                 .sorted(compareDescending)
-                .map(Person::toString)
                 .collect(Collectors.toList());
-        String sortedPeople = String.join("\n", descendingAge);
-        Approvals.verify(sortedPeople);
+        Approvals.verifyAll("descendingAge", descendingAge);
     }
 }
