@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class Iteration {
     private static final List<String> friends = Arrays.asList("Brian", "Nate", "Neal", "Raju", "Sara", "Scott");
 
-    static Predicate<String> startsWith(final String letter) {
+    private static Predicate<String> startsWith(final String letter) {
         return name -> name.startsWith(letter);
     }
 
