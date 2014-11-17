@@ -10,7 +10,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * 
+ *
  * Created by Greg on 11/16/2014.
  */
 public class Compare {

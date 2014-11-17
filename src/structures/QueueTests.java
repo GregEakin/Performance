@@ -31,7 +31,7 @@ public class QueueTests {
         Queue<Integer> queue = new Queue<Integer>(3);
         queue.enqueue(15);
         queue.enqueue(5);
-        assertEquals(new Integer(5), queue.dequeue());
+        assertEquals(new Integer(15), queue.dequeue());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -45,7 +45,7 @@ public class QueueTests {
         Queue<Integer> queue = new Queue<Integer>(3);
         for (int i = 0; i < 3; i++)
             queue.enqueue(i);
-        assertEquals(new Integer(2), queue.dequeue());
+        assertEquals(new Integer(0), queue.dequeue());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -54,8 +54,7 @@ public class QueueTests {
         for (int i = 0; i < 4; i++)
             queue.enqueue(i);
     }
-
-    @Test
+@Test
     public void popOverflow() {
         Queue<Integer> queue = new Queue<Integer>(3);
         try {
@@ -63,6 +62,6 @@ public class QueueTests {
                 queue.enqueue(i);
         } catch (IllegalArgumentException ex) {
         }
-        assertEquals(new Integer(2), queue.dequeue());
+        assertEquals(new Integer(0), queue.dequeue());
     }
 }
