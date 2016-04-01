@@ -5,47 +5,47 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public class UndirectedGraph<T> {
-    final Dictionary<T, Edge<T>> edges = new Hashtable<T, Edge<T>>();
+class UndirectedGraph<T> {
+    final Dictionary<T, Edge<T>> edges = new Hashtable<>();
 
-    public UndirectedGraph(Pair<T>[] data) {
+    UndirectedGraph(Pair<T>[] data) {
         for (Pair<T> pair : data) {
             Edge<T> edge1 = edges.get(pair.x);
             if (edge1 == null) {
-                edge1 = new Edge<T>(pair.x);
+                edge1 = new Edge<>(pair.x);
                 edges.put(pair.x, edge1);
             }
-            edge1.append(new Edge<T>(pair.y));
+            edge1.append(new Edge<>(pair.y));
 
             Edge<T> edge2 = edges.get(pair.y);
             if (edge2 == null) {
-                edge2 = new Edge<T>(pair.y);
+                edge2 = new Edge<>(pair.y);
                 edges.put(pair.y, edge2);
             }
-            edge2.append(new Edge<T>(pair.x));
+            edge2.append(new Edge<>(pair.x));
         }
     }
 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (Edge<T> edge : Collections.list(edges.elements())) {
+        for (Edge edge : Collections.list(edges.elements())) {
             result.append(edge.value);
             while (edge.next != null) {
                 edge = edge.next;
                 result.append(" -> ");
                 result.append(edge.value);
             }
-            result.append(" /\n");
+            result.append("\n");
         }
         return result.toString();
     }
 
-    public static class Pair<T> {
+    static class Pair<T> {
         final T x;
         final T y;
 
-        public Pair(T x, T y) {
+        Pair(T x, T y) {
             this.x = x;
             this.y = y;
         }
@@ -59,7 +59,7 @@ public class UndirectedGraph<T> {
             if (!(obj instanceof Pair))
                 return false;
 
-            Pair<T> pair = (Pair<T>) obj;
+            Pair<?> pair = (Pair<?>) obj;
             return (x == pair.x && y == pair.y) || (x == pair.y && y == pair.x);
         }
 
