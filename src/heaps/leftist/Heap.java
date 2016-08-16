@@ -2,7 +2,6 @@ package heaps.leftist;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Vector;
 
 /**
  * Created by Greg on 7/5/2014.
@@ -11,7 +10,7 @@ public class Heap {
     private Node array = null;
 
     public Heap(int[] array) {
-        Queue<Node> queue = new LinkedList<Node>();
+        Queue<Node> queue = new LinkedList<>();
         for(int element : array)
         {
             Node node = new Node();
@@ -42,7 +41,6 @@ public class Heap {
         // if this was a max height biased leftist tree, then the
         // next line would be: if(x.element < y.element)
         if(x.element.compareTo(y.element) > 0) {
-            // x.element > y.element
             Node temp = x;
             x = y;
             y = temp;
@@ -83,6 +81,9 @@ public class Heap {
 
     private String dumpNode(Node node)
     {
+        if (node == null)
+            return "<null>";
+
         StringBuilder result = new StringBuilder();
             result.append(node.element);
             result.append(" (");
